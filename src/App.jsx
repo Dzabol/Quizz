@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import StartingPage from "./components/StartingPage";
 import QuestionContainer from "./components/QuestionContainer";
 import { categories, generateQuestions } from "./data/questions";
+import ReactLoading from "react-loading";
 
 function App() {
   const questionsQuantity = 5;
   const category = categories.movies;
   const [allQuestions, updateQuestions] = useState([]);
   const [currentQuestions, updateCurrentQuestions] = useState([]);
+  const [areQuestionsGenerated, updateAreQuestionsGenerated] = useState(false);
+  const [categoryPage, updateCategoryPage] = useState(true);
 
   //Questions from API
   useEffect(() => {
@@ -20,25 +23,40 @@ function App() {
   }, [category]);
 
   // Generate questions
-  useEffect(() => {
-    if (allQuestions.length > 0) {
+  function generateSetOfQuestions() {
+    if (allQuestions.length > questionsQuantity) {
       const questions = generateQuestions(questionsQuantity, allQuestions);
       updateCurrentQuestions(questions);
+      updateAreQuestionsGenerated(true);
+      updateCategoryPage(false);
+      console.log(areQuestionsGenerated);
+      console.log(categoryPage);
     }
-  }, [allQuestions]);
+  }
 
-  const setOfQuestions = currentQuestions.map((question) => (
+  const setOfQuestions = currentQuestions.map((singleQuestion) => (
     <QuestionContainer
       key={crypto.randomUUID()}
       id={crypto.randomUUID()}
-      questionData={question}
+      question={singleQuestion.question}
+      answers={singleQuestion.answers}
     />
   ));
 
   return (
     <main>
-      {/* <StartingPage /> */}
-      {setOfQuestions}
+      {categoryPage ? (
+        <StartingPage onClick={() => generateSetOfQuestions()} />
+      ) : currentQuestions.length === questionsQuantity ? (
+        setOfQuestions
+      ) : (
+        <ReactLoading
+          type={"spin"}
+          color={"#4d5b9e"}
+          height={"20%"}
+          width={"20%"}
+        />
+      )}
     </main>
   );
 }

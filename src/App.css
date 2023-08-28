@@ -34,15 +34,13 @@ main {
 
   width: 80%;
   max-width: 750px;
-  min-height: fit-content;
-  min-width: fit-content;
-  min-height: fit-content;
+  min-width: 150px;
 
   box-shadow: 1px 1px 10px #999;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 
@@ -74,6 +72,8 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  width: 100%;
+  margin: 0;
 }
 
 .question-container h1 {
@@ -82,4 +82,52 @@ button:active {
   line-height: 1.2em;
   letter-spacing: 0em;
   text-align: left;
+  margin: 0;
+}
+.answers-container {
+  max-width: 80%;
+  margin-top: 15px;
+  display: flex;
+  flex: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+label {
+  display: inline-block;
+  background-color: #f5f7fb;
+  border: 0.79px solid #4d5b9e;
+  border-radius: 1.2em;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  text-align: center;
+  font-family: Inter;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #d6dbf5;
+  color: white;
+}
+
+.line {
+  border: 0.8px solid #dbdef0;
+  margin: 20px 0;
 }
