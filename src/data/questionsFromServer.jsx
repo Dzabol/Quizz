@@ -1,10 +1,11 @@
 import { decode } from "html-entities";
 
-function generateQuestions(allQuestionsArray, questionsQuantity = 5) {
-  const randomQuestionNumbers = generateRandomQuestionsNumbersFromDataBase(
-    questionsQuantity,
-    allQuestionsArray
-  );
+async function generateQuestions(allQuestionsArray, questionsQuantity = 5) {
+  const randomQuestionNumbers =
+    await generateRandomQuestionsNumbersFromDataBase(
+      allQuestionsArray,
+      questionsQuantity
+    );
 
   const questions = randomQuestionNumbers.map((questionIndex) => {
     const question = decode(allQuestionsArray[questionIndex].question);
@@ -29,7 +30,7 @@ function generateQuestions(allQuestionsArray, questionsQuantity = 5) {
   return questions;
 }
 
-function generateRandomQuestionsNumbersFromDataBase(
+async function generateRandomQuestionsNumbersFromDataBase(
   allQuestionsArray,
   quantity
 ) {

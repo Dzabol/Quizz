@@ -12,8 +12,9 @@ function StartPage(props) {
   });
   const [questionsURL, updateURL] = useState("");
   const [allQuestionsInDataBase, updateAllQuestionsInDataBase] = useState();
+  const [numberOfAvaiableQuestions, updateNumberOfAvaiableQuestions] =
+    useState(0);
 
-  console.log(allQuestionsInDataBase);
   //Get Categories
   useEffect(() => {
     const getCategories = async () => {
@@ -71,6 +72,7 @@ function StartPage(props) {
       try {
         const data = await getDataFromServer(questionsURL);
         updateAllQuestionsInDataBase(data);
+        updateNumberOfAvaiableQuestions(data.results.length);
       } catch (error) {
         console.error(error);
       }
@@ -85,6 +87,7 @@ function StartPage(props) {
       clearTimeout(timerId);
     };
   }, [questionsURL]);
+
   //------------------------------------------------------------------------------------------------------
   return (
     <div className="startPage-container">
@@ -112,7 +115,12 @@ function StartPage(props) {
       </label>
       <button
         disabled={!categoriesStatus}
-        onClick={() => props.startButtonFunction(questionsURL)}
+        onClick={() =>
+          props.startButtonFunction(
+            allQuestionsInDataBase.results,
+            choosenCategorie.quantityOfQuestions
+          )
+        }
       >
         {!categoriesStatus ? "Can't start quiz" : "Start quiz"}
       </button>

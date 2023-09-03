@@ -1,40 +1,38 @@
 import { useState, useEffect } from "react";
-/* Components */
 import StartPage from "./components/startPage";
-
-/* Functions */
-import {
-  categoriesURL,
-  getDataFromServer,
-  checkResponse,
-} from "./data/dataFromServer";
+import QuestopnPage from "./components/QuestionsPage";
 import { generateQuestions } from "./data/questionsFromServer";
 
 function App() {
   const [startPageIsVisibe, updateStartPageVisibility] = useState(true);
-  const [categoryURL, updateCategoryURL] = useState("");
   const [allQuestionsFromDataBase, updateQuestionsFromDataBase] = useState([]);
+  const [questions, updateQuestions] = useState();
 
-  console.log(allQuestionsFromDataBase);
+  async function startQuizFunction(
+    questionsFromDataBase,
+    numberOfTheQuestionsToGenerate
+  ) {
+    const allQuestions = await questionsFromDataBase;
+    const questionsInQuize = await generateQuestions(
+      allQuestions,
+      numberOfTheQuestionsToGenerate
+    );
+    console.log(questionsInQuize);
 
-  function startQuizFunction(categoriesURL) {
-    updateCategoryURL(categoriesURL);
-    updateStartPageVisibility(false);
+    const updateValues = async () => {
+      updateQuestionsFromDataBase(allQuestions);
+      updateQuestions(questionsInQuize);
+      updateStartPageVisibility(false);
+    };
+    updateValues();
   }
-
-  //Get questions from server
-  useEffect(() => {
-    if (categoryURL) {
-      updateQuestionsFromDataBase(getDataFromServer(categoryURL));
-    }
-  }, [categoryURL]);
 
   return (
     <main>
       {startPageIsVisibe ? (
         <StartPage startButtonFunction={startQuizFunction} />
       ) : (
-        "test"
+        <QuestopnPage questions={questions} />
       )}
     </main>
   );
