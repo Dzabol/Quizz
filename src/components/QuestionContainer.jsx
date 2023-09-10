@@ -3,7 +3,7 @@ import React from "react";
 export default function QuestionContainer(props) {
   const answers = props.question.answers.map((answer) => {
     return (
-      <div key={crypto.randomUUID()}>
+      <div key={crypto.randomUUID()} className="radio-container">
         <input
           type="radio"
           id={answer.answerID}
@@ -19,7 +19,9 @@ export default function QuestionContainer(props) {
           })}
           disabled={!props.disabled}
         />
-        <label htmlFor={answer.answerID}>{answer.answer}</label>
+        <label htmlFor={answer.answerID} className="radio-label">
+          {answer.answer}
+        </label>
       </div>
     );
   });
@@ -27,7 +29,8 @@ export default function QuestionContainer(props) {
   return (
     <div>
       <p>{props.question.question}</p>
-      {answers}
+      <div className="answers-container">{answers}</div>
+
       <div className="line"></div>
     </div>
   );
