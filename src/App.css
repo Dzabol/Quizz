@@ -22,6 +22,7 @@ main {
   justify-content: center;
   align-items: center;
 
+  width: fit-content;
   max-width: 750px;
   min-width: 200px;
   width: 80%;
@@ -163,7 +164,7 @@ input {
   flex-wrap: wrap;
   /* flex-direction: row; */
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: left;
   gap: 1em;
   margin: 1.2em 0;
 }

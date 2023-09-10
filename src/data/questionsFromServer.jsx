@@ -35,6 +35,13 @@ async function generateRandomQuestionsNumbersFromDataBase(
   return Array.from(uniqueNumbers);
 }
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Losowy index od 0 do i
+    [array[i], array[j]] = [array[j], array[i]]; // Zamiana miejscami elementów
+  }
+}
+
 async function generateQuestions(allQuestionsArray, questionsQuantity = 5) {
   const randomQuestionNumbers =
     await generateRandomQuestionsNumbersFromDataBase(
@@ -59,6 +66,7 @@ async function generateQuestions(allQuestionsArray, questionsQuantity = 5) {
       };
     });
     const answers = [correctAnswer, ...incorrect_answers];
+    shuffleArray(answers);
     return {
       questionID: crypto.randomUUID(),
       question: question,
