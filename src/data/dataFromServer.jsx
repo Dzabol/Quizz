@@ -1,23 +1,3 @@
-import { decode } from "html-entities";
-
-const categoriesURL = "https://opentdb.com/api_category.php";
-
-async function getDataFromServer(serverAddress) {
-  try {
-    const response = await fetch(serverAddress);
-    if (!response.ok) {
-      throw new Error(
-        `An error occurred while fetching data from the server: ${response}`
-      );
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error("An error occurred while fetching data from the server.");
-  }
-}
-
 function checkResponse(dataFromServer) {
   const response = dataFromServer.response_code;
 
@@ -65,4 +45,4 @@ function checkResponse(dataFromServer) {
   }
 }
 
-export { categoriesURL, getDataFromServer, checkResponse };
+export { checkResponse };
