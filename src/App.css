@@ -180,7 +180,7 @@ input[type="radio"] {
 
 .radio-label {
   margin: 0;
-  padding: 0.2em 1.5em;
+  padding: 0.4em 1.5em;
   border: 0.79px solid #4d5b9e;
   background: #f5f7fb;
   border-radius: 1em;
@@ -189,12 +189,26 @@ input[type="radio"] {
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0em;
-  /* white-space: normal; */
   display: inline-block;
   text-align: center;
 }
 
 input[type="radio"]:checked + .radio-label {
   background: #d6dbf5;
+  border: none;
+}
+
+.correctAnswer {
+  background: #94d7a2;
+  border: none;
+}
+
+input[type="radio"]:checked + .radio-label.correctAnswer {
+  background: #94d7a2;
+  border: none;
+}
+
+input[type="radio"]:checked + .radio-label.wrongAnswer {
+  background: #f8bcbc;
   border: none;
 }
