@@ -19,6 +19,7 @@ function App() {
   const [questionCategories, updateCategories] = useState([]);
   const [questionsURL, updateURL] = useState("");
   const [choosenCategorie, updateChoosenCategorie] = useState({
+    categoryName: "",
     category: "",
     quantityOfQuestions: 5,
   });
@@ -54,6 +55,7 @@ function App() {
           }));
           updateChoosenCategorie((prevValue) => ({
             ...prevValue,
+
             category: data.trivia_categories[0].id,
           }));
         }
@@ -61,6 +63,19 @@ function App() {
     };
     getCategories();
   }, []);
+
+  //CategoryName
+  function generateCategoryName() {
+    const categoryObject = questionCategories.find(
+      (item) => item.id === parseInt(choosenCategorie.category, 10)
+    );
+    if (categoryObject) {
+      updateChoosenCategorie((prevValue) => ({
+        ...prevValue,
+        categoryName: categoryObject.name,
+      }));
+    }
+  }
 
   //Generate URL to categories
   useEffect(() => {
@@ -109,7 +124,12 @@ function App() {
       categoriesAndQuestionsStatus.Questions
         ? true
         : false;
-  }, [allQuestionsInDataBase, questionCategories, choosenCategorie]);
+  }, [
+    allQuestionsInDataBase,
+    questionCategories,
+    choosenCategorie,
+    isStartingPageVisible,
+  ]);
 
   //Categories from front page
   function handleCategoryChange(event) {
@@ -162,6 +182,7 @@ function App() {
   }, [questionsinQuiz]);
 
   async function startQuiz() {
+    generateCategoryName();
     const questionsInQuiz = async () =>
       generateQuestions(
         allQuestionsInDataBase,
@@ -208,6 +229,7 @@ function App() {
         />
       ) : (
         <QuestionsPage
+          category={choosenCategorie.categoryName}
           questions={questionsinQuiz}
           handleAnswerChange={handleQuestions}
           checkQuize={checkUserAnswers}

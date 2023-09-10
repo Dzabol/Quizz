@@ -26,6 +26,7 @@ export default function QuestionsPage(props) {
 
   return (
     <div>
+      <div className="category-container">{`"${props.category}"`}</div>
       <div className="questions-container">{GeneratedQuestions}</div>
       {questionsStatus.showCorrectAnswers && (
         <div className="score-container">
